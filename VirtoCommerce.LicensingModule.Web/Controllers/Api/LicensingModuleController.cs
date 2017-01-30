@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.Description;
 using VirtoCommerce.Domain.Commerce.Model.Search;
 using VirtoCommerce.LicensingModule.Core.Model;
@@ -18,7 +13,7 @@ namespace VirtoCommerce.LicensingModule.Web.Controllers.Api
     public class LicensingModuleController : ApiController
     {
         private readonly ILicenseService _licenseService;
-        
+
 
         public LicensingModuleController(ILicenseService licenseService)
         {
@@ -49,6 +44,5 @@ namespace VirtoCommerce.LicensingModule.Web.Controllers.Api
             _licenseService.SaveChanges(new[] { license });
             return Ok(license);
         }
-
     }
 }

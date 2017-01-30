@@ -1,5 +1,5 @@
-﻿using Omu.ValueInjecter;
-using System;
+﻿using System;
+using Omu.ValueInjecter;
 using VirtoCommerce.LicensingModule.Core.Model;
 using VirtoCommerce.Platform.Core.Common;
 
@@ -14,25 +14,25 @@ namespace VirtoCommerce.LicensingModule.Data.Model
         public DateTime ExpirationDate { get; set; }
         public string Type { get; set; }
 
-        public virtual License ToModel(License License)
+        public virtual License ToModel(License license)
         {
-            if (License == null)
-                throw new NullReferenceException("License");
+            if (license == null)
+                throw new ArgumentNullException(nameof(license));
 
-            License.InjectFrom(this);
+            license.InjectFrom(this);
 
             //License.LicenseStatus = EnumUtility.SafeParse<LicenseStatus>(this.Status, LicenseStatus.Active);
-            return License;
+            return license;
         }
 
-        public virtual LicenseEntity FromModel(License License, PrimaryKeyResolvingMap pkMap)
+        public virtual LicenseEntity FromModel(License license, PrimaryKeyResolvingMap pkMap)
         {
-            if (License == null)
-                throw new NullReferenceException("License");
+            if (license == null)
+                throw new ArgumentNullException(nameof(license));
 
-            pkMap.AddPair(License, this);
+            pkMap.AddPair(license, this);
 
-            this.InjectFrom(License);
+            this.InjectFrom(license);
 
             //this.Status = License.LicenseStatus.ToString();
             return this;
@@ -41,7 +41,7 @@ namespace VirtoCommerce.LicensingModule.Data.Model
         public virtual void Patch(LicenseEntity target)
         {
             if (target == null)
-                throw new NullReferenceException("target");
+                throw new ArgumentNullException(nameof(target));
 
             //target.CustomerName = this.CustomerName;
             //target.Number = this.Number;

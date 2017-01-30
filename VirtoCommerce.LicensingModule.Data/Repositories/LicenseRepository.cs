@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using VirtoCommerce.LicensingModule.Data.Model;
 using VirtoCommerce.Platform.Data.Infrastructure;
@@ -28,13 +27,7 @@ namespace VirtoCommerce.LicensingModule.Data.Repositories
         }
 
         #region ILicenseRepository
-        public IQueryable<LicenseEntity> Licenses
-        {
-            get
-            {
-                return GetAsQueryable<LicenseEntity>();
-            }
-        }
+        public IQueryable<LicenseEntity> Licenses => GetAsQueryable<LicenseEntity>();
 
         public LicenseEntity[] GetLicensesByIds(string[] ids)
         {

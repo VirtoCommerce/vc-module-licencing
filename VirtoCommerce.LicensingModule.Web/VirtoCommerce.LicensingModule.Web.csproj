@@ -138,7 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\logo.png" />
-    <Content Include="packages.config" />
+    <None Include="packages.config" />
     <Content Include="module.manifest" />
     <Content Include="Localizations\en.VirtoCommerce.Licensing.json" />
     <None Include="Web.Debug.config">
@@ -155,7 +155,7 @@
     <Content Include="Scripts\blades\license-list.tpl.html" />
     <Content Include="Scripts\licensing.js" />
     <Content Include="Scripts\resources\licenseApi.js" />
-    <Content Include="Web.config" />
+    <None Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\CommonAssemblyInfo.cs">

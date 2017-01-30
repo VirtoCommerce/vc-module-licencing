@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using VirtoCommerce.Platform.Core.Common;
-using System;
+﻿using System;
+using System.Linq;
 using VirtoCommerce.Domain.Commerce.Model.Search;
 using VirtoCommerce.LicensingModule.Core.Model;
 using VirtoCommerce.LicensingModule.Core.Services;
-using VirtoCommerce.LicensingModule.Data.Repositories;
-using VirtoCommerce.Platform.Data.Infrastructure;
 using VirtoCommerce.LicensingModule.Data.Model;
+using VirtoCommerce.LicensingModule.Data.Repositories;
+using VirtoCommerce.Platform.Core.Common;
+using VirtoCommerce.Platform.Data.Infrastructure;
 
 namespace VirtoCommerce.LicensingModule.Data.Services
 {
@@ -57,7 +57,7 @@ namespace VirtoCommerce.LicensingModule.Data.Services
                     var sourcePlanEntity = AbstractTypeFactory<LicenseEntity>.TryCreateInstance();
                     if (sourcePlanEntity != null)
                     {
-                        sourcePlanEntity = sourcePlanEntity.FromModel(entity, pkMap) as LicenseEntity;
+                        sourcePlanEntity = sourcePlanEntity.FromModel(entity, pkMap);
                         var targetPlanEntity = existingEntities.FirstOrDefault(x => x.Id == entity.Id);
                         if (targetPlanEntity != null)
                         {
