@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<module>
+    <id>VirtoCommerce.Licensing</id>
+    <version>1.0.0</version>
+    <!--need to make new platform release and update this dependency higher than 2.12.8-->
+    <platformVersion>2.12.8</platformVersion>
+    <!--<dependencies>
+    </dependencies>-->
+
+    <title>Licensing module</title>
+    <description>Licenses management</description>
+    <authors>
+        <author>Egidijus Mažeika</author>
+    </authors>
+    <owners>
+        <owner>Virto Commerce</owner>
+    </owners>
+    <projectUrl>https://virtocommerce.com/virto-licensing-module</projectUrl>
+    <iconUrl>https://github.com/VirtoCommerce/vc-module-licensing/raw/master/VirtoCommerce.LicensingModule.Web/Content/logo.png</iconUrl>
+    <releaseNotes>First version.</releaseNotes>
+    <copyright>Copyright © 2011-2017 Virto Commerce. All rights reserved</copyright>
+    <tags>licensing</tags>
+
+    <assemblyFile>VirtoCommerce.LicensingModule.Web.dll</assemblyFile>
+    <moduleType>VirtoCommerce.LicensingModule.Web.Module, VirtoCommerce.LicensingModule.Web</moduleType>
+
+    <scripts>
+        <directory virtualPath="$/Scripts" searchPattern="*.js" searchSubdirectories="true" />
+    </scripts>
+
+    <permissions>
+        <group name="Licensing">
+            <permission id="licensing:access" name="Open licensing menu" description=""/>
+            <permission id="licensing:create" name="Create licensing data" description=""/>
+            <permission id="licensing:read" name="View licensing data" description=""/>
+            <permission id="licensing:update" name="Update licensing data" description=""/>
+            <permission id="licensing:delete" name="Delete licensing data" description=""/>
+        </group>
+    </permissions>
+</module>

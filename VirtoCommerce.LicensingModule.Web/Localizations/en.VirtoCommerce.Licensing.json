@@ -1,0 +1,38 @@
+﻿{
+    "licensing": {
+        "main-menu-title": "Licensing",
+        "blades": {
+            "license-list": {
+                "title": "Licenses",
+                "subtitle": "Manage Licenses",
+                "labels": {
+                    "name": "Name",
+                    "currency": "Currency",
+                    "last-modified": "Modified"
+                }
+            },
+            "license-detail": {
+                "title-new": "New License",
+                "labels": {
+                    "name": "Name",
+                    "currency": "Currency",
+                    "description": "Description"
+                },
+                "placeholders": {
+                    "name": "Enter name",
+                    "currency": "Select...",
+                    "description": "Enter description"
+                }
+            }
+        },
+        "dialogs": {
+            "licenses-delete": {
+                "title": "Delete confirmation",
+                "message": "Are you sure you want to delete selected licenses?"
+            }
+        },
+        "commands": {
+            "add-selected": "Add selected"
+        }
+    }
+}
