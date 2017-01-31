@@ -36,9 +36,18 @@ namespace VirtoCommerce.LicensingModule.Data.Repositories
             }
         }
 
-        public LicenseEntity[] GetLicensesByIds(string[] ids)
+        public LicenseEntity[] GetByIds(string[] ids)
         {
             return Licenses.Where(x => ids.Contains(x.Id)).ToArray();
+        }
+
+        public void RemoveByIds(string[] ids)
+        {
+            var entries = GetByIds(ids);
+            foreach (var entry in entries)
+            {
+                Remove(entry);
+            }
         }
         #endregion
     }

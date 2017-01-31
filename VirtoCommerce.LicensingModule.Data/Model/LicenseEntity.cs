@@ -1,17 +1,36 @@
 ﻿using Omu.ValueInjecter;
 using System;
+using System.ComponentModel.DataAnnotations;
 using VirtoCommerce.LicensingModule.Core.Model;
 using VirtoCommerce.Platform.Core.Common;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VirtoCommerce.LicensingModule.Data.Model
 {
     public class LicenseEntity : AuditableEntity
     {
+        [Required]
+        [StringLength(256)]
         public string CustomerEmail { get; set; }
+
+        [Required]
+        [StringLength(256)]
         public string CustomerName { get; set; }
-        public string PublicKey { get; set; }
+
+        [Required]
+        [Index("IX_ActivationCode", 1, IsUnique = true)]
+        [StringLength(16)]
+        public string ActivationCode { get; set; }
+
+        [Required]
+        [StringLength(64)]
         public string Signature { get; set; }
+
+        [Required]
         public DateTime ExpirationDate { get; set; }
+
+        [Required]
+        [StringLength(32)]
         public string Type { get; set; }
 
         public virtual License ToModel(License License)
@@ -20,8 +39,6 @@ namespace VirtoCommerce.LicensingModule.Data.Model
                 throw new NullReferenceException("License");
 
             License.InjectFrom(this);
-
-            //License.LicenseStatus = EnumUtility.SafeParse<LicenseStatus>(this.Status, LicenseStatus.Active);
             return License;
         }
 
@@ -34,7 +51,6 @@ namespace VirtoCommerce.LicensingModule.Data.Model
 
             this.InjectFrom(License);
 
-            //this.Status = License.LicenseStatus.ToString();
             return this;
         }
 
@@ -43,10 +59,12 @@ namespace VirtoCommerce.LicensingModule.Data.Model
             if (target == null)
                 throw new NullReferenceException("target");
 
-            //target.CustomerName = this.CustomerName;
-            //target.Number = this.Number;
-            //target.Status = this.Status;
-            //target.EndDate = this.EndDate;
+            target.ActivationCode = ActivationCode;
+            target.CustomerEmail = CustomerEmail;
+            target.CustomerName = CustomerName;
+            target.ExpirationDate = ExpirationDate;
+            target.Signature = Signature;
+            target.Type = Type;
         }
     }
 }

@@ -6,22 +6,28 @@
                 "title": "Licenses",
                 "subtitle": "Manage Licenses",
                 "labels": {
-                    "name": "Name",
-                    "currency": "Currency",
-                    "last-modified": "Modified"
+                    "customer-name": "Company Name",
+                    "customer-email": "Company Email",
+                    "expiration-date": "Expiration date",
+                    "type": "License type"
                 }
             },
             "license-detail": {
+                "title": "License details",
                 "title-new": "New License",
                 "labels": {
-                    "name": "Name",
-                    "currency": "Currency",
-                    "description": "Description"
+                    "customer-name": "Company Name",
+                    "customer-email": "Company Email",
+                    "expiration-date": "Expiration date",
+                    "type": "License type",
+                    "activation-code": "Activation code"
                 },
                 "placeholders": {
-                    "name": "Enter name",
-                    "currency": "Select...",
-                    "description": "Enter description"
+                    "customer-name": "Enter name",
+                    "customer-email": "Enter email",
+                    "expiration-date": "Select date",
+                    "type": "Select...",
+                    "activation-code": "Enter unique code"
                 }
             }
         },
@@ -32,7 +38,7 @@
             }
         },
         "commands": {
-            "add-selected": "Add selected"
+            "issue": "Download license"
         }
     }
 }

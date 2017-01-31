@@ -7,6 +7,7 @@ function ($scope, licenseApi, dialogService, uiGridHelper, bladeUtils) {
     blade.refresh = function () {
         blade.isLoading = true;
         return licenseApi.search({
+            keyword: filter.keyword,
             sort: uiGridHelper.getSortExpression($scope),
             skip: ($scope.pageSettings.currentPage - 1) * $scope.pageSettings.itemsPerPageCount,
             take: $scope.pageSettings.itemsPerPageCount
@@ -32,10 +33,8 @@ function ($scope, licenseApi, dialogService, uiGridHelper, bladeUtils) {
             angular.extend(newBlade, {
                 isNew: true,
                 saveCallback: function (newlicense) {
-                    newBlade.isNew = false;
                     blade.refresh().then(function () {
-                        newBlade.currentEntityId = newlicense.id;
-                        bladeNavigationService.showBlade(newBlade, blade);
+                        $scope.selectNode(newlicense);
                     });
                 }
             });
@@ -68,29 +67,29 @@ function ($scope, licenseApi, dialogService, uiGridHelper, bladeUtils) {
     blade.subtitle = 'licensing.blades.license-list.subtitle';
 
     blade.toolbarCommands = [
-    {
-        name: "platform.commands.refresh", icon: 'fa fa-refresh',
-        executeMethod: blade.refresh,
-        canExecuteMethod: function () { return true; }
-    },
-    {
-        name: "platform.commands.add", icon: 'fa fa-plus',
-        executeMethod: function () {
-            $scope.selectNode({}, true);
+        {
+            name: "platform.commands.refresh", icon: 'fa fa-refresh',
+            executeMethod: blade.refresh,
+            canExecuteMethod: function () { return true; }
         },
-        canExecuteMethod: function () {
-            return true;
+        {
+            name: "platform.commands.add", icon: 'fa fa-plus',
+            executeMethod: function () {
+                $scope.selectNode({ expirationDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)) }, true);
+            },
+            canExecuteMethod: function () {
+                return true;
+            },
+            permission: 'licensing:create'
         },
-        permission: 'licensing:create'
-    },
-    {
-        name: "platform.commands.delete", icon: 'fa fa-trash-o',
-        executeMethod: function () {
-            $scope.deleteList($scope.gridApi.selection.getSelectedRows());
-        },
-        canExecuteMethod: isItemsChecked,
-        permission: 'licensing:delete'
-    }
+        {
+            name: "platform.commands.delete", icon: 'fa fa-trash-o',
+            executeMethod: function () {
+                $scope.deleteList($scope.gridApi.selection.getSelectedRows());
+            },
+            canExecuteMethod: isItemsChecked,
+            permission: 'licensing:delete'
+        }
     ];
 
     var filter = $scope.filter = {};
