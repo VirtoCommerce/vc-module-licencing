@@ -117,10 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Target" xml:space="preserve">
-    <value>H4sIAAAAAAAEAM1YzW7jNhC+F+g7EDp7rcRpF1tD3kXiJIXR/CyibNBbQUtjhyhFaUnKsLHok/XQR+ordCjJskTJjuw4i8IXi+R880fNzKd///7H+7SMOFmAVCwWI+e0f+IQEEEcMjEfOamevfvgfPr44w/eVRgtydP63Jk5h5JCjZxnrZOh66rgGSKq+hELZKzime4HceTSMHYHJye/uKenLiCEg1iEeA+p0CyC7AEfx7EIINEp5bdxCFwV67jjZ6jkjkagEhrAyHliUsfjOIpABtC/YQEIhcaiYMqhf0k17T9AEiumY8lAOeScM4pm+sBnDqFCxJpqdGL4RYGvZSzmfoILlD+uEsBzM8oVFM4NN8e7+nkyMH66G8E1VJAqHUd7Ap6eFYFzbfGDwu+UgcXQXmEK9Mp4nYV35OSxhHzdIbbG4ZhLc7pTCrI89muIPfKyXK+8YngTza9HxinXqYSRgFRLynvkczrlLPgNVo/xnyBGIuW86hd6hnu1BVz6LOMEpF49wKzwdhI6xK3LubZgKVaRyUOANwctd8gtXd6AmOtnfHcGHxxyzZYQrleKq/RFMHyhUEjLFB/v0GA65VDuuzt1jrM0gLyKKOM71A9+fv+W6s3T99d+Hmi2yG7fGEF2Bf9N1PtsLqi5fTs0v//pLTRfLRMmM8fxtSjVm/+PLNofzojv8OFs8CZXRwLaGx7FAawRbMa2gXWy42L1+ix2M/LYmjx3U6ubFRybp6ZMgKyX8bIJtpVy7H1FNVeFwrpjObIPuqU1ZE11Y1DeWftW82gzvzR0097dvL+v5wB3yyDg3dIkwUBWBoNihfj5VDB+5+/fEaMcww1US2MsrS01YSzpHKxdVI2WXjOptGlgU2pyOQ6jxrFmWraEfK2vPfJ2Y9skYi1n/ueye45KVg4tTZuYX2MYIhA6iwiUdtsDREM+G+cop7Klq45jnkZiW2feJW31xyqQtbU/Zt702iDzne6IdiOrYtp73VEr/akKWFnujmV3nCqgvdcdNW88Vax8ZY9cVLtILRXVje549U5SBazv7G2hqfot9l2sDrHOBquuN9E813o17SrhNsqENfna1WdX+baPlNrLMm6Va68onS+Tu0YtzY84BMO0YKGpo/5KaYjy6uV/5WPO0N/NgVsq2AyUzsmBgxRqYFHA/w8dc5UK+T6c7LvTHLGgMnimskl0jsFiWtEzJnEEknI08HYOsoFvDFcTEcJy5HzL5Idk8vsfdYgeuZd4U4fktEcmCue+rykee8QpjPzVIDWvZSytYTAz6FEISYj/9WsJSauJhpK8nm8cbF8b32gD60ILGvyjQ04OoxsHAe/HLprTbnfmsHqZN+T1HmM9jdGp3OTiyMGkotl9PLf6AdK7BIWvTQlhPkcKCMxd34Cuz0zELF7nAb2sWrQ+YqcJNMWrQ8+lZjMaaNwOQKmMFz5RnpqXK5pCOBH3qU5Sfa4URFNea/Seu1t/xpzqNnv3iXlSx3ABzWTm9t+Li5TxsLT7uvkqbYMw9+ZXwPWshiAvRrj5qkS6i0VHoCJ8l5AA1lmhHyFKOIKpe+HTBRxiG7LhG5jTYLUeIraDvJyIeti9S0bnkkaqwNjIm4/qrvmq/vE/NTMEwYcXAAA=</value>
+  <data name="ActivationCodeChanged" xml:space="preserve">
+    <value>Activation code changed from '{0}' to '{1}'</value>
   </data>
-  <data name="DefaultSchema" xml:space="preserve">
-    <value>dbo</value>
+  <data name="EmailChanged" xml:space="preserve">
+    <value>Customer email changed from '{0}' to '{1}'</value>
+  </data>
+  <data name="ExpirationDateChanged" xml:space="preserve">
+    <value>Expiration date changed from '{0}' to '{1}'</value>
+  </data>
+  <data name="NameChanged" xml:space="preserve">
+    <value>Customer name changed from '{0}' to '{1}'</value>
+  </data>
+  <data name="TypeChanged" xml:space="preserve">
+    <value>License type changed from '{0}' to '{1}'</value>
   </data>
 </root>

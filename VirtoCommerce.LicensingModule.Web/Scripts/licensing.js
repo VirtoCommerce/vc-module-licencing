@@ -31,7 +31,7 @@ angular.module(moduleName, [])
   }]
 )
 .run(
-  ['platformWebApp.mainMenuService', '$state', function (mainMenuService, $state) {
+  ['platformWebApp.mainMenuService', '$state', 'platformWebApp.widgetService', function (mainMenuService, $state, widgetService) {
       //Register module in main menu
       var menuItem = {
           path: 'browse/licensing',
@@ -42,4 +42,10 @@ angular.module(moduleName, [])
           permission: 'licensing:access'
       };
       mainMenuService.addMenuItem(menuItem);
+
+      widgetService.registerWidget({
+          controller: 'platformWebApp.changeLog.operationsWidgetController',
+          isVisible: function (blade) { return !blade.isNew; },
+          template: '$(Platform)/Scripts/app/changeLog/widgets/operations-widget.tpl.html'
+      }, 'licenseDetail');
   }]);

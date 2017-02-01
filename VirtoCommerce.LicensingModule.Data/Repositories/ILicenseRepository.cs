@@ -8,6 +8,7 @@ namespace VirtoCommerce.LicensingModule.Data.Repositories
     {
         IQueryable<LicenseEntity> Licenses { get; }
 
-        LicenseEntity[] GetLicensesByIds(string[] ids);
+        LicenseEntity[] GetByIds(string[] ids);
+        void RemoveByIds(string[] ids);
     }
 }

@@ -29,6 +29,24 @@
         <directory virtualPath="$/Scripts" searchPattern="*.js" searchSubdirectories="true" />
     </scripts>
 
+    <settings>
+        <group name="Licensing">
+            <setting>
+                <name>Licensing.LicenseType</name>
+                <valueType>string</valueType>
+                <defaultValue>Commerce</defaultValue>
+                <title>License types</title>
+                <description>License types</description>
+                <isArray>true</isArray>
+                <arrayValues>
+                    <value>Commerce</value>
+                    <value>Community</value>
+                    <value>Community deployment</value>
+                </arrayValues>
+            </setting>
+        </group>
+    </settings>
+
     <permissions>
         <group name="Licensing">
             <permission id="licensing:access" name="Open licensing menu" description=""/>
