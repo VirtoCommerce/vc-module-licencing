@@ -89,11 +89,8 @@ namespace VirtoCommerce.LicensingModule.Data.Services
                     //ensure that ActivationCode is filled
                     if (string.IsNullOrEmpty(entity.ActivationCode))
                     {
-                        entity.ActivationCode = Guid.NewGuid().ToString().Substring(0, 6).ToUpper();
+                        entity.ActivationCode = Guid.NewGuid().ToString("N").ToUpper();
                     }
-
-                    //regenerate the Signature
-                    entity.Signature = Guid.NewGuid().ToString();
 
                     var originalEntity = existingEntities.FirstOrDefault(x => x.Id == entity.Id);
                     var originalLicense = originalEntity != null ? originalEntity.ToModel(AbstractTypeFactory<License>.TryCreateInstance()) : entity;

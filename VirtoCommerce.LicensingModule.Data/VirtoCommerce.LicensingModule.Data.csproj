@@ -89,9 +89,9 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Migrations\201701301233073_Initial.cs" />
-    <Compile Include="Migrations\201701301233073_Initial.Designer.cs">
-      <DependentUpon>201701301233073_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201702011403319_Initial.cs" />
+    <Compile Include="Migrations\201702011403319_Initial.Designer.cs">
+      <DependentUpon>201702011403319_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\LicenseEntity.cs" />
@@ -117,8 +117,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201701301233073_Initial.resx">
-      <DependentUpon>201701301233073_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201702011403319_Initial.resx">
+      <DependentUpon>201702011403319_Initial.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Observers\LogLicenseChangesResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

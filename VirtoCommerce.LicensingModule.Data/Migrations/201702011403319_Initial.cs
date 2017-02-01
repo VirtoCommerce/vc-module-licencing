@@ -12,12 +12,11 @@ namespace VirtoCommerce.LicensingModule.Data.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
-                        CustomerEmail = c.String(nullable: false, maxLength: 256),
+                        Type = c.String(nullable: false, maxLength: 64),
                         CustomerName = c.String(nullable: false, maxLength: 256),
-                        ActivationCode = c.String(nullable: false, maxLength: 16),
-                        Signature = c.String(nullable: false, maxLength: 64),
+                        CustomerEmail = c.String(nullable: false, maxLength: 256),
                         ExpirationDate = c.DateTime(nullable: false),
-                        Type = c.String(nullable: false, maxLength: 32),
+                        ActivationCode = c.String(nullable: false, maxLength: 64),
                         CreatedDate = c.DateTime(nullable: false),
                         ModifiedDate = c.DateTime(),
                         CreatedBy = c.String(maxLength: 64),

@@ -10,28 +10,24 @@ namespace VirtoCommerce.LicensingModule.Data.Model
     public class LicenseEntity : AuditableEntity
     {
         [Required]
-        [StringLength(256)]
-        public string CustomerEmail { get; set; }
+        [StringLength(64)]
+        public string Type { get; set; }
 
         [Required]
         [StringLength(256)]
         public string CustomerName { get; set; }
 
         [Required]
-        [Index("IX_ActivationCode", 1, IsUnique = true)]
-        [StringLength(16)]
-        public string ActivationCode { get; set; }
-
-        [Required]
-        [StringLength(64)]
-        public string Signature { get; set; }
+        [StringLength(256)]
+        public string CustomerEmail { get; set; }
 
         [Required]
         public DateTime ExpirationDate { get; set; }
 
         [Required]
-        [StringLength(32)]
-        public string Type { get; set; }
+        [Index("IX_ActivationCode", 1, IsUnique = true)]
+        [StringLength(64)]
+        public string ActivationCode { get; set; }
 
         public virtual License ToModel(License license)
         {
@@ -63,7 +59,6 @@ namespace VirtoCommerce.LicensingModule.Data.Model
             target.CustomerEmail = CustomerEmail;
             target.CustomerName = CustomerName;
             target.ExpirationDate = ExpirationDate;
-            target.Signature = Signature;
             target.Type = Type;
         }
     }
