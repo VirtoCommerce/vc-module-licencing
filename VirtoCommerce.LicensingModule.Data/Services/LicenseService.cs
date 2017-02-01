@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using Newtonsoft.Json;
 using VirtoCommerce.Domain.Commerce.Model.Search;
 using VirtoCommerce.LicensingModule.Core.Events;
 using VirtoCommerce.LicensingModule.Core.Model;
@@ -15,6 +18,10 @@ namespace VirtoCommerce.LicensingModule.Data.Services
 {
     public class LicenseService : ServiceBase, ILicenseService
     {
+        private static readonly string _hashAlgorithmName = HashAlgorithmName.SHA256.Name;
+        private static readonly HashAlgorithm _hashAlgorithm = HashAlgorithm.Create(_hashAlgorithmName);
+        private static readonly AsymmetricSignatureFormatter _signatureFormatter = CreateSignatureFormatter(_hashAlgorithmName, null);
+
         private readonly Func<ILicenseRepository> _licenseRepositoryFactory;
         private readonly IChangeLogService _changeLogService;
         private readonly IEventPublisher<LicenseChangeEvent> _eventPublisher;
@@ -127,6 +134,65 @@ namespace VirtoCommerce.LicensingModule.Data.Services
                 repository.RemoveByIds(ids);
                 CommitChanges(repository);
             }
+        }
+
+        public string GetSignedLicense(string code)
+        {
+            string result = null;
+
+            var licenseEntity = GetByCode(code);
+            if (licenseEntity != null)
+            {
+                var license = new
+                {
+                    licenseEntity.Type,
+                    licenseEntity.CustomerName,
+                    licenseEntity.CustomerEmail,
+                    licenseEntity.ExpirationDate,
+                };
+
+                var licenseString = JsonConvert.SerializeObject(license);
+                var signature = CreateSignature(licenseString);
+
+                result = string.Join("\r\n", licenseString, signature);
+            }
+
+            return result;
+        }
+
+
+        private LicenseEntity GetByCode(string code)
+        {
+            using (var repository = _licenseRepositoryFactory())
+            {
+                return repository.Licenses
+                    .FirstOrDefault(x => x.ActivationCode == code);
+            }
+        }
+
+        private static string CreateSignature(string data)
+        {
+            var dataBytes = Encoding.UTF8.GetBytes(data);
+            var dataHash = _hashAlgorithm.ComputeHash(dataBytes);
+            var signatureBytes = _signatureFormatter.CreateSignature(dataHash);
+            var signature = Convert.ToBase64String(signatureBytes);
+
+            return signature;
+        }
+
+        private static RSAPKCS1SignatureFormatter CreateSignatureFormatter(string hashAlgorithmName, string privateKey)
+        {
+            var rsa = new RSACryptoServiceProvider();
+
+            if (!string.IsNullOrEmpty(privateKey))
+            {
+                rsa.FromXmlString(privateKey);
+            }
+
+            var signatureDeformatter = new RSAPKCS1SignatureFormatter(rsa);
+            signatureDeformatter.SetHashAlgorithm(hashAlgorithmName);
+
+            return signatureDeformatter;
         }
     }
 }

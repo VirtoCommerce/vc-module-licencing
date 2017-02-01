@@ -6,8 +6,9 @@ namespace VirtoCommerce.LicensingModule.Core.Services
     public interface ILicenseService
     {
         GenericSearchResult<License> Search(LicenseSearchCriteria criteria);
-        License[] GetByIds(string[] LicenseIds);
+        License[] GetByIds(string[] ids);
         void SaveChanges(License[] licenses);
         void Delete(string[] ids);
+        string GetSignedLicense(string code);
     }
 }

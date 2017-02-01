@@ -85,25 +85,25 @@ namespace VirtoCommerce.LicensingModule.Web.Controllers.Api
             return StatusCode(HttpStatusCode.NoContent);
         }
 
+        [HttpGet]
         [Route("getLicenseFile/{activationCode}")]
-        [AllowAnonymous]
         [ResponseType(typeof(HttpResponseMessage))]
+        [AllowAnonymous]
         public HttpResponseMessage GetLicenseFile(string activationCode)
         {
-            //if (request == null)
-            //{
-            //    return BadRequest("request is null");
-            //}
+            var signedLicense = _licenseService.GetSignedLicense(activationCode);
 
-            var result = new HttpResponseMessage(HttpStatusCode.OK);
-            var stream = new MemoryStream(Encoding.UTF8.GetBytes("license file content"));
-            result.Content = new StreamContent(stream);
-            result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+            if (!string.IsNullOrEmpty(signedLicense))
             {
-                FileName = "virtoCommerce.lic"
-            };
-            result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-            return result;
+                var result = new HttpResponseMessage(HttpStatusCode.OK);
+                var stream = new MemoryStream(Encoding.UTF8.GetBytes(signedLicense));
+                result.Content = new StreamContent(stream);
+                result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = "license.txt" };
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue("text/plain");
+                return result;
+            }
+
+            return new HttpResponseMessage(HttpStatusCode.NotFound);
         }
     }
 }
