@@ -44,6 +44,12 @@
                     <value>Community deployment</value>
                 </arrayValues>
             </setting>
+            <setting>
+                <name>Licensing.SignaturePrivateKey</name>
+                <valueType>text</valueType>
+                <title>Signature private key</title>
+                <description>Private key for signing licenses</description>
+            </setting>
         </group>
     </settings>
 

@@ -12,25 +12,24 @@ using VirtoCommerce.LicensingModule.Data.Repositories;
 using VirtoCommerce.Platform.Core.ChangeLog;
 using VirtoCommerce.Platform.Core.Common;
 using VirtoCommerce.Platform.Core.Events;
+using VirtoCommerce.Platform.Core.Settings;
 using VirtoCommerce.Platform.Data.Infrastructure;
 
 namespace VirtoCommerce.LicensingModule.Data.Services
 {
     public class LicenseService : ServiceBase, ILicenseService
     {
-        private static readonly string _hashAlgorithmName = HashAlgorithmName.SHA256.Name;
-        private static readonly HashAlgorithm _hashAlgorithm = HashAlgorithm.Create(_hashAlgorithmName);
-        private static readonly AsymmetricSignatureFormatter _signatureFormatter = CreateSignatureFormatter(_hashAlgorithmName, null);
-
         private readonly Func<ILicenseRepository> _licenseRepositoryFactory;
         private readonly IChangeLogService _changeLogService;
         private readonly IEventPublisher<LicenseChangeEvent> _eventPublisher;
+        private readonly ISettingsManager _settingsManager;
 
-        public LicenseService(Func<ILicenseRepository> licenseRepositoryFactory, IChangeLogService changeLogService, IEventPublisher<LicenseChangeEvent> eventPublisher)
+        public LicenseService(Func<ILicenseRepository> licenseRepositoryFactory, IChangeLogService changeLogService, IEventPublisher<LicenseChangeEvent> eventPublisher, ISettingsManager settingsManager)
         {
             _licenseRepositoryFactory = licenseRepositoryFactory;
             _changeLogService = changeLogService;
             _eventPublisher = eventPublisher;
+            _settingsManager = settingsManager;
         }
 
         public GenericSearchResult<License> Search(LicenseSearchCriteria criteria)
@@ -170,29 +169,30 @@ namespace VirtoCommerce.LicensingModule.Data.Services
             }
         }
 
-        private static string CreateSignature(string data)
+        private string CreateSignature(string data)
         {
-            var dataBytes = Encoding.UTF8.GetBytes(data);
-            var dataHash = _hashAlgorithm.ComputeHash(dataBytes);
-            var signatureBytes = _signatureFormatter.CreateSignature(dataHash);
-            var signature = Convert.ToBase64String(signatureBytes);
+            var hashAlgorithmName = HashAlgorithmName.SHA256.Name;
 
-            return signature;
-        }
-
-        private static RSAPKCS1SignatureFormatter CreateSignatureFormatter(string hashAlgorithmName, string privateKey)
-        {
-            var rsa = new RSACryptoServiceProvider();
-
-            if (!string.IsNullOrEmpty(privateKey))
+            using (var hashAlgorithm = HashAlgorithm.Create(hashAlgorithmName))
+            using (var rsa = new RSACryptoServiceProvider())
             {
-                rsa.FromXmlString(privateKey);
+                // TODO: Store private key in a more secure storage, for example in Azure Key Vault
+                var privateKey = _settingsManager.GetValue("Licensing.SignaturePrivateKey", string.Empty);
+                if (!string.IsNullOrEmpty(privateKey))
+                {
+                    rsa.FromXmlString(privateKey);
+                }
+
+                var signatureFormatter = new RSAPKCS1SignatureFormatter(rsa);
+                signatureFormatter.SetHashAlgorithm(hashAlgorithmName);
+
+                var dataBytes = Encoding.UTF8.GetBytes(data);
+                var dataHash = hashAlgorithm?.ComputeHash(dataBytes) ?? new byte[0];
+                var signatureBytes = signatureFormatter.CreateSignature(dataHash);
+                var signature = Convert.ToBase64String(signatureBytes);
+
+                return signature;
             }
-
-            var signatureDeformatter = new RSAPKCS1SignatureFormatter(rsa);
-            signatureDeformatter.SetHashAlgorithm(hashAlgorithmName);
-
-            return signatureDeformatter;
         }
     }
 }
