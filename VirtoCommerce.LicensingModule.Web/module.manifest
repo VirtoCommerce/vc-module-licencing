@@ -2,13 +2,13 @@
 <module>
     <id>VirtoCommerce.Licensing</id>
     <version>1.0.0</version>
-    <!--need to make new platform release and update this dependency higher than 2.12.8-->
     <platformVersion>2.12.8</platformVersion>
-    <!--<dependencies>
-    </dependencies>-->
+    <dependencies>
+        <dependency id="VirtoCommerce.Core" version="2.19.5" />
+    </dependencies>
 
     <title>Licensing module</title>
-    <description>Licenses management</description>
+    <description>License management</description>
     <authors>
         <author>Egidijus Mažeika</author>
         <author>Artem Dudarev</author>
