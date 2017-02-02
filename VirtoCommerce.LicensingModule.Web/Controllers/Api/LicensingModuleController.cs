@@ -98,8 +98,8 @@ namespace VirtoCommerce.LicensingModule.Web.Controllers.Api
                 var result = new HttpResponseMessage(HttpStatusCode.OK);
                 var stream = new MemoryStream(Encoding.UTF8.GetBytes(signedLicense));
                 result.Content = new StreamContent(stream);
-                result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = "license.txt" };
-                result.Content.Headers.ContentType = new MediaTypeHeaderValue("text/plain");
+                result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = "VirtoCommerce.lic" };
+                result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 return result;
             }
 
