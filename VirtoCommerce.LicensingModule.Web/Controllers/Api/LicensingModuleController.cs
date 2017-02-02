@@ -1,5 +1,4 @@
-﻿using System.IO;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -95,9 +94,7 @@ namespace VirtoCommerce.LicensingModule.Web.Controllers.Api
 
             if (!string.IsNullOrEmpty(signedLicense))
             {
-                var result = new HttpResponseMessage(HttpStatusCode.OK);
-                var stream = new MemoryStream(Encoding.UTF8.GetBytes(signedLicense));
-                result.Content = new StreamContent(stream);
+                var result = new HttpResponseMessage(HttpStatusCode.OK) { Content = new ByteArrayContent(Encoding.UTF8.GetBytes(signedLicense)) };
                 result.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment") { FileName = "VirtoCommerce.lic" };
                 result.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
                 return result;
