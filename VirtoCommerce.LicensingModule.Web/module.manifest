@@ -2,7 +2,7 @@
 <module>
     <id>VirtoCommerce.Licensing</id>
     <version>1.0.0</version>
-    <platformVersion>2.12.8</platformVersion>
+    <platformVersion>2.12.9</platformVersion>
     <dependencies>
         <dependency id="VirtoCommerce.Core" version="2.19.5" />
     </dependencies>

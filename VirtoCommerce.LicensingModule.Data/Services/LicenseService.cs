@@ -95,7 +95,7 @@ namespace VirtoCommerce.LicensingModule.Data.Services
                     //ensure that ActivationCode is filled
                     if (string.IsNullOrEmpty(entity.ActivationCode))
                     {
-                        entity.ActivationCode = Guid.NewGuid().ToString("N").ToUpper();
+                        entity.ActivationCode = Guid.NewGuid().ToString("N").Substring(0, 6).ToUpper();
                     }
 
                     var originalEntity = existingEntities.FirstOrDefault(x => x.Id == entity.Id);
