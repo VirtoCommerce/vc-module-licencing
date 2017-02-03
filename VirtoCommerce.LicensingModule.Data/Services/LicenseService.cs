@@ -21,13 +21,15 @@ namespace VirtoCommerce.LicensingModule.Data.Services
     {
         private readonly Func<ILicenseRepository> _licenseRepositoryFactory;
         private readonly IChangeLogService _changeLogService;
+        private readonly IEventPublisher<LicenseActivateEvent> _activationEventPublisher;
         private readonly IEventPublisher<LicenseChangeEvent> _eventPublisher;
         private readonly ISettingsManager _settingsManager;
 
-        public LicenseService(Func<ILicenseRepository> licenseRepositoryFactory, IChangeLogService changeLogService, IEventPublisher<LicenseChangeEvent> eventPublisher, ISettingsManager settingsManager)
+        public LicenseService(Func<ILicenseRepository> licenseRepositoryFactory, IChangeLogService changeLogService, IEventPublisher<LicenseActivateEvent> activationEventPublisher, IEventPublisher<LicenseChangeEvent> eventPublisher, ISettingsManager settingsManager)
         {
             _licenseRepositoryFactory = licenseRepositoryFactory;
             _changeLogService = changeLogService;
+            _activationEventPublisher = activationEventPublisher;
             _eventPublisher = eventPublisher;
             _settingsManager = settingsManager;
         }
@@ -135,7 +137,7 @@ namespace VirtoCommerce.LicensingModule.Data.Services
             }
         }
 
-        public string GetSignedLicense(string code)
+        public string GetSignedLicense(string code, string clientIp)
         {
             string result = null;
 
@@ -154,6 +156,10 @@ namespace VirtoCommerce.LicensingModule.Data.Services
                 var signature = CreateSignature(licenseString);
 
                 result = string.Join("\r\n", licenseString, signature);
+
+                //Raise event
+                var activateEvent = new LicenseActivateEvent(licenseEntity.ToModel(AbstractTypeFactory<License>.TryCreateInstance()), clientIp);
+                _activationEventPublisher.Publish(activateEvent);
             }
 
             return result;

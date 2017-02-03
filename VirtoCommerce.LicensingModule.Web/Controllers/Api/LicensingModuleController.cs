@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Web;
 using System.Web.Http;
 using System.Web.Http.Description;
 using VirtoCommerce.Domain.Commerce.Model.Search;
@@ -90,7 +91,8 @@ namespace VirtoCommerce.LicensingModule.Web.Controllers.Api
         [AllowAnonymous]
         public HttpResponseMessage GetLicenseFile(string activationCode)
         {
-            var signedLicense = _licenseService.GetSignedLicense(activationCode);
+            var clientIp = HttpContext.Current.Request.UserHostAddress;
+            var signedLicense = _licenseService.GetSignedLicense(activationCode, clientIp);
 
             if (!string.IsNullOrEmpty(signedLicense))
             {

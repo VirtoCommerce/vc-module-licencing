@@ -25,9 +25,11 @@ namespace VirtoCommerce.LicensingModule.Web
         {
             base.Initialize();
 
+            _container.RegisterType<IEventPublisher<LicenseActivateEvent>, EventPublisher<LicenseActivateEvent>>();
             _container.RegisterType<IEventPublisher<LicenseChangeEvent>, EventPublisher<LicenseChangeEvent>>();
-            //log License changes
-            _container.RegisterType<IObserver<LicenseChangeEvent>, LogLicenseChangesObserver>("LogLicenseChangesObserver");
+            //log License activations and changes
+            _container.RegisterType<IObserver<LicenseActivateEvent>, LogLicenseEventsObserver>("LogLicenseActivationsObserver");
+            _container.RegisterType<IObserver<LicenseChangeEvent>, LogLicenseEventsObserver>("LogLicenseChangesObserver");
 
             _container.RegisterType<ILicenseRepository>(new InjectionFactory(c => new LicenseRepository(_connectionStringName, new EntityPrimaryKeyGeneratorInterceptor(), _container.Resolve<AuditableInterceptor>())));
             _container.RegisterType<ILicenseService, LicenseService>();

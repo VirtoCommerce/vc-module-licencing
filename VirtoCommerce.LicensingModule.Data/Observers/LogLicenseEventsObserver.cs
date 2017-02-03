@@ -7,14 +7,22 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.LicensingModule.Data.Observers
 {
-    public class LogLicenseChangesObserver : IObserver<LicenseChangeEvent>
+    public class LogLicenseEventsObserver : IObserver<LicenseActivateEvent>, IObserver<LicenseChangeEvent>
     {
         private readonly IChangeLogService _changeLogService;
 
-        public LogLicenseChangesObserver(IChangeLogService changeLogService)
+        public LogLicenseEventsObserver(IChangeLogService changeLogService)
         {
             _changeLogService = changeLogService;
         }
+
+        #region IObserver<LicenseActivateEvent>
+        public void OnNext(LicenseActivateEvent value)
+        {
+            var log = GetLogRecord(value.License.Id, LogLicenseEventsResources.Activated, value.Ip);
+            _changeLogService.SaveChanges(new[] { log });
+        }
+        #endregion
 
         #region IObserver<LicenseChangeEvent>
         public void OnCompleted()
@@ -36,23 +44,23 @@ namespace VirtoCommerce.LicensingModule.Data.Observers
 
                 if (original.CustomerName != modified.CustomerName)
                 {
-                    operationLogs.Add(GetLogRecord(modified.Id, LogLicenseChangesResources.NameChanged, original.CustomerName, modified.CustomerName));
+                    operationLogs.Add(GetLogRecord(modified.Id, LogLicenseEventsResources.NameChanged, original.CustomerName, modified.CustomerName));
                 }
                 if (original.CustomerEmail != modified.CustomerEmail)
                 {
-                    operationLogs.Add(GetLogRecord(modified.Id, LogLicenseChangesResources.EmailChanged, original.CustomerEmail, modified.CustomerEmail));
+                    operationLogs.Add(GetLogRecord(modified.Id, LogLicenseEventsResources.EmailChanged, original.CustomerEmail, modified.CustomerEmail));
                 }
                 if (original.ExpirationDate != modified.ExpirationDate)
                 {
-                    operationLogs.Add(GetLogRecord(modified.Id, LogLicenseChangesResources.ExpirationDateChanged, original.ExpirationDate, modified.ExpirationDate));
+                    operationLogs.Add(GetLogRecord(modified.Id, LogLicenseEventsResources.ExpirationDateChanged, original.ExpirationDate, modified.ExpirationDate));
                 }
                 if (original.Type != modified.Type)
                 {
-                    operationLogs.Add(GetLogRecord(modified.Id, LogLicenseChangesResources.TypeChanged, original.Type, modified.Type));
+                    operationLogs.Add(GetLogRecord(modified.Id, LogLicenseEventsResources.TypeChanged, original.Type, modified.Type));
                 }
                 if (original.ActivationCode != modified.ActivationCode)
                 {
-                    operationLogs.Add(GetLogRecord(modified.Id, LogLicenseChangesResources.ActivationCodeChanged, original.ActivationCode, modified.ActivationCode));
+                    operationLogs.Add(GetLogRecord(modified.Id, LogLicenseEventsResources.ActivationCodeChanged, original.ActivationCode, modified.ActivationCode));
                 }
 
                 _changeLogService.SaveChanges(operationLogs.ToArray());

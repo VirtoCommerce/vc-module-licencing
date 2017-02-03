@@ -22,14 +22,14 @@ namespace VirtoCommerce.LicensingModule.Data.Observers {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class LogLicenseChangesResources {
+    internal class LogLicenseEventsResources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal LogLicenseChangesResources() {
+        internal LogLicenseEventsResources() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace VirtoCommerce.LicensingModule.Data.Observers {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("VirtoCommerce.LicensingModule.Data.Observers.LogLicenseChangesResources", typeof(LogLicenseChangesResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("VirtoCommerce.LicensingModule.Data.Observers.LogLicenseEventsResources", typeof(LogLicenseEventsResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,6 +57,15 @@ namespace VirtoCommerce.LicensingModule.Data.Observers {
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to License activated from IP &apos;{0}&apos;.
+        /// </summary>
+        internal static string Activated {
+            get {
+                return ResourceManager.GetString("Activated", resourceCulture);
             }
         }
         

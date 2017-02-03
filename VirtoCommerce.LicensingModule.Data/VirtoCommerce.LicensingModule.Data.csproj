@@ -95,11 +95,11 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\LicenseEntity.cs" />
-    <Compile Include="Observers\LogLicenseChangesObserver.cs" />
-    <Compile Include="Observers\LogLicenseChangesResources.Designer.cs">
+    <Compile Include="Observers\LogLicenseEventsObserver.cs" />
+    <Compile Include="Observers\LogLicenseEventsResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LogLicenseChangesResources.resx</DependentUpon>
+      <DependentUpon>LogLicenseEventsResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\ILicenseRepository.cs" />
@@ -120,9 +120,9 @@
     <EmbeddedResource Include="Migrations\201702011403319_Initial.resx">
       <DependentUpon>201702011403319_Initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Observers\LogLicenseChangesResources.resx">
+    <EmbeddedResource Include="Observers\LogLicenseEventsResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>LogLicenseChangesResources.Designer.cs</LastGenOutput>
+      <LastGenOutput>LogLicenseEventsResources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
