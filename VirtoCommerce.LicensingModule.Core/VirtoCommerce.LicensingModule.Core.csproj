@@ -59,8 +59,8 @@
     <Compile Include="..\CommonAssemblyInfo.cs">
       <Link>Properties\CommonAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Events\LicenseActivateEvent.cs" />
-    <Compile Include="Events\LicenseChangeEvent.cs" />
+    <Compile Include="Events\LicenseSignedEvent.cs" />
+    <Compile Include="Events\LicenseChangedEvent.cs" />
     <Compile Include="Model\License.cs" />
     <Compile Include="Model\LicenseSearchCriteria.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

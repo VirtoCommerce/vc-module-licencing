@@ -65,10 +65,10 @@ function ($scope, licenseApi, dialogService, bladeNavigationService, settings) {
             {
                 name: "licensing.commands.issue", icon: 'fa fa-print',
                 executeMethod: function () {
-                    window.open('api/licenses/getLicenseFile/' + blade.currentEntity.activationCode, '_blank');
+                    window.open('api/licenses/download/' + blade.currentEntity.activationCode, '_blank');
                 },
                 canExecuteMethod: function () { return !isDirty(); },
-                permission: "licensing:create"
+                permission: "licensing:issue"
             }
         ];
     }

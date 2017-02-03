@@ -123,6 +123,9 @@
   <data name="ActivationCodeChanged" xml:space="preserve">
     <value>Activation code changed from '{0}' to '{1}'</value>
   </data>
+  <data name="Downloaded" xml:space="preserve">
+    <value>License downloaded from IP '{0}'</value>
+  </data>
   <data name="EmailChanged" xml:space="preserve">
     <value>Customer email changed from '{0}' to '{1}'</value>
   </data>

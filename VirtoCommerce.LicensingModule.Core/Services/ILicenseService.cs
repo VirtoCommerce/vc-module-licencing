@@ -9,6 +9,6 @@ namespace VirtoCommerce.LicensingModule.Core.Services
         License[] GetByIds(string[] ids);
         void SaveChanges(License[] licenses);
         void Delete(string[] ids);
-        string GetSignedLicense(string code, string clientIp);
+        string GetSignedLicense(string code, string clientIpAddress, bool isActivated);
     }
 }

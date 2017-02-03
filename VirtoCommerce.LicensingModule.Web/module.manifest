@@ -60,6 +60,7 @@
             <permission id="licensing:read" name="View licensing data" description=""/>
             <permission id="licensing:update" name="Update licensing data" description=""/>
             <permission id="licensing:delete" name="Delete licensing data" description=""/>
+            <permission id="licensing:issue" name="Issue license" description=""/>
         </group>
     </permissions>
 </module>

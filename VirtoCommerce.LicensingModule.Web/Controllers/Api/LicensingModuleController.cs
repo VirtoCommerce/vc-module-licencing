@@ -86,13 +86,28 @@ namespace VirtoCommerce.LicensingModule.Web.Controllers.Api
         }
 
         [HttpGet]
-        [Route("getLicenseFile/{activationCode}")]
+        [Route("download/{activationCode}")]
+        [ResponseType(typeof(HttpResponseMessage))]
+        [CheckPermission(Permission = PredefinedPermissions.Issue)]
+        public HttpResponseMessage Download(string activationCode)
+        {
+            return GetSignedLicense(activationCode, false);
+        }
+
+        [HttpGet]
+        [Route("activate/{activationCode}")]
         [ResponseType(typeof(HttpResponseMessage))]
         [AllowAnonymous]
-        public HttpResponseMessage GetLicenseFile(string activationCode)
+        public HttpResponseMessage Activate(string activationCode)
         {
-            var clientIp = HttpContext.Current.Request.UserHostAddress;
-            var signedLicense = _licenseService.GetSignedLicense(activationCode, clientIp);
+            return GetSignedLicense(activationCode, true);
+        }
+
+
+        private HttpResponseMessage GetSignedLicense(string activationCode, bool isActivated)
+        {
+            var clientIp = GetClientIpAddress(Request);
+            var signedLicense = _licenseService.GetSignedLicense(activationCode, clientIp, isActivated);
 
             if (!string.IsNullOrEmpty(signedLicense))
             {
@@ -103,6 +118,12 @@ namespace VirtoCommerce.LicensingModule.Web.Controllers.Api
             }
 
             return new HttpResponseMessage(HttpStatusCode.NotFound);
+        }
+
+        private static string GetClientIpAddress(HttpRequestMessage requestMessage)
+        {
+            var request = (requestMessage.Properties["MS_HttpContext"] as HttpContextWrapper)?.Request;
+            return request?.ServerVariables["HTTP_X_FORWARDED_FOR"]?.Split(',').FirstOrDefault() ?? request?.ServerVariables["REMOTE_ADDR"] ?? request?.UserHostAddress;
         }
     }
 }

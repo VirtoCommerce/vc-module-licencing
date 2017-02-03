@@ -7,7 +7,7 @@ using VirtoCommerce.Platform.Core.Common;
 
 namespace VirtoCommerce.LicensingModule.Data.Observers
 {
-    public class LogLicenseEventsObserver : IObserver<LicenseActivateEvent>, IObserver<LicenseChangeEvent>
+    public class LogLicenseEventsObserver : IObserver<LicenseSignedEvent>, IObserver<LicenseChangedEvent>
     {
         private readonly IChangeLogService _changeLogService;
 
@@ -17,10 +17,11 @@ namespace VirtoCommerce.LicensingModule.Data.Observers
         }
 
         #region IObserver<LicenseActivateEvent>
-        public void OnNext(LicenseActivateEvent value)
+        public void OnNext(LicenseSignedEvent value)
         {
-            var log = GetLogRecord(value.License.Id, LogLicenseEventsResources.Activated, value.Ip);
-            _changeLogService.SaveChanges(new[] { log });
+            var template = value.IsActivated ? LogLicenseEventsResources.Activated : LogLicenseEventsResources.Downloaded;
+            var log = GetLogRecord(value.License.Id, template, value.ClientIpAddress);
+            _changeLogService.SaveChanges(log);
         }
         #endregion
 
@@ -33,12 +34,12 @@ namespace VirtoCommerce.LicensingModule.Data.Observers
         {
         }
 
-        public void OnNext(LicenseChangeEvent value)
+        public void OnNext(LicenseChangedEvent value)
         {
             var original = value.OriginalLicense;
             var modified = value.ModifiedLicense;
 
-            if (value.ChangeState == EntryState.Modified)
+            if (value.State == EntryState.Modified)
             {
                 var operationLogs = new List<OperationLog>();
 
@@ -68,11 +69,11 @@ namespace VirtoCommerce.LicensingModule.Data.Observers
         }
         #endregion
 
-        private static OperationLog GetLogRecord(string LicenseId, string template, params object[] parameters)
+        private static OperationLog GetLogRecord(string licenseId, string template, params object[] parameters)
         {
             return new OperationLog
             {
-                ObjectId = LicenseId,
+                ObjectId = licenseId,
                 ObjectType = typeof(License).Name,
                 OperationType = EntryState.Modified,
                 Detail = string.Format(template, parameters)

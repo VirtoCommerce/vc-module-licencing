@@ -79,6 +79,15 @@ namespace VirtoCommerce.LicensingModule.Data.Observers {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to License downloaded from IP &apos;{0}&apos;.
+        /// </summary>
+        internal static string Downloaded {
+            get {
+                return ResourceManager.GetString("Downloaded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customer email changed from &apos;{0}&apos; to &apos;{1}&apos;.
         /// </summary>
         internal static string EmailChanged {

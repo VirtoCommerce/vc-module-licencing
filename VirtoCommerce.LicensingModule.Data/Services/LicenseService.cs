@@ -21,17 +21,17 @@ namespace VirtoCommerce.LicensingModule.Data.Services
     {
         private readonly Func<ILicenseRepository> _licenseRepositoryFactory;
         private readonly IChangeLogService _changeLogService;
-        private readonly IEventPublisher<LicenseActivateEvent> _activationEventPublisher;
-        private readonly IEventPublisher<LicenseChangeEvent> _eventPublisher;
+        private readonly IEventPublisher<LicenseSignedEvent> _licenseSignedEventPublisher;
+        private readonly IEventPublisher<LicenseChangedEvent> _licenseChangedEventPublisher;
         private readonly ISettingsManager _settingsManager;
 
-        public LicenseService(Func<ILicenseRepository> licenseRepositoryFactory, IChangeLogService changeLogService, IEventPublisher<LicenseActivateEvent> activationEventPublisher, IEventPublisher<LicenseChangeEvent> eventPublisher, ISettingsManager settingsManager)
+        public LicenseService(Func<ILicenseRepository> licenseRepositoryFactory, IChangeLogService changeLogService, ISettingsManager settingsManager, IEventPublisher<LicenseSignedEvent> licenseSignedEventPublisher, IEventPublisher<LicenseChangedEvent> licenseChangedEventPublisher)
         {
             _licenseRepositoryFactory = licenseRepositoryFactory;
             _changeLogService = changeLogService;
-            _activationEventPublisher = activationEventPublisher;
-            _eventPublisher = eventPublisher;
             _settingsManager = settingsManager;
+            _licenseSignedEventPublisher = licenseSignedEventPublisher;
+            _licenseChangedEventPublisher = licenseChangedEventPublisher;
         }
 
         public GenericSearchResult<License> Search(LicenseSearchCriteria criteria)
@@ -56,10 +56,10 @@ namespace VirtoCommerce.LicensingModule.Data.Services
                 {
                     TotalCount = query.Count(),
                     Results = query.Skip(criteria.Skip)
-                                    .Take(criteria.Take)
-                                    .ToArray()
-                                    .Select(x => x.ToModel(AbstractTypeFactory<License>.TryCreateInstance()))
-                                    .ToArray()
+                                   .Take(criteria.Take)
+                                   .ToArray()
+                                   .Select(x => x.ToModel(AbstractTypeFactory<License>.TryCreateInstance()))
+                                   .ToArray()
                 };
                 return retVal;
             }
@@ -103,8 +103,8 @@ namespace VirtoCommerce.LicensingModule.Data.Services
                     var originalEntity = existingEntities.FirstOrDefault(x => x.Id == entity.Id);
                     var originalLicense = originalEntity != null ? originalEntity.ToModel(AbstractTypeFactory<License>.TryCreateInstance()) : entity;
                     //Raise event
-                    var changeEvent = new LicenseChangeEvent(originalEntity == null ? EntryState.Added : EntryState.Modified, originalLicense, entity);
-                    _eventPublisher.Publish(changeEvent);
+                    var changeEvent = new LicenseChangedEvent(originalEntity == null ? EntryState.Added : EntryState.Modified, originalLicense, entity);
+                    _licenseChangedEventPublisher.Publish(changeEvent);
 
                     var sourceEntity = AbstractTypeFactory<LicenseEntity>.TryCreateInstance();
                     if (sourceEntity != null)
@@ -137,7 +137,7 @@ namespace VirtoCommerce.LicensingModule.Data.Services
             }
         }
 
-        public string GetSignedLicense(string code, string clientIp)
+        public string GetSignedLicense(string code, string clientIpAddress, bool isActivated)
         {
             string result = null;
 
@@ -158,8 +158,8 @@ namespace VirtoCommerce.LicensingModule.Data.Services
                 result = string.Join("\r\n", licenseString, signature);
 
                 //Raise event
-                var activateEvent = new LicenseActivateEvent(licenseEntity.ToModel(AbstractTypeFactory<License>.TryCreateInstance()), clientIp);
-                _activationEventPublisher.Publish(activateEvent);
+                var activateEvent = new LicenseSignedEvent(licenseEntity.ToModel(AbstractTypeFactory<License>.TryCreateInstance()), clientIpAddress, isActivated);
+                _licenseSignedEventPublisher.Publish(activateEvent);
             }
 
             return result;
