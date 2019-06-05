@@ -15,7 +15,6 @@ using VirtoCommerce.Platform.Core.Web.Security;
 namespace VirtoCommerce.LicensingModule.Web.Controllers.Api
 {
     [RoutePrefix("api/licenses")]
-    [CheckPermission(Permission = PredefinedPermissions.Read)]
     public class LicensingModuleController : ApiController
     {
         private readonly ILicenseService _licenseService;
@@ -29,6 +28,7 @@ namespace VirtoCommerce.LicensingModule.Web.Controllers.Api
         [HttpPost]
         [Route("search")]
         [ResponseType(typeof(GenericSearchResult<License>))]
+        [CheckPermission(Permission = PredefinedPermissions.Read)]
         public IHttpActionResult SearchLicenses(LicenseSearchCriteria request)
         {
             if (request == null)
