@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <noWarn>1591</noWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Folder Include="Security\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="VirtoCommerce.Platform.Core" Version="3.0.0-beta0001" />
+    </ItemGroup>
+
+</Project>
